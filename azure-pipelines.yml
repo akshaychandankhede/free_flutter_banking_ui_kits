@@ -11,10 +11,12 @@ steps:
     displayName: 'Install CocoaPods'
 
   - script: |
-      curl -o flutter.tar.xz https://storage.googleapis.com/flutter_infra/releases/stable/macos/flutter_macos_2.5.2-stable.tar.xz
-      tar xf flutter_macos_2.5.2-stable.tar.xz
-      export PATH="$PATH:$PWD/flutter/bin"
-      flutter precache
+      mkdir deployment
+      cd deployment
+      wget https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.10.1-stable.zip
+      unzip flutter_macos_3.10.1-stable.zip
+      export PATH="$PATH:`pwd`/flutter/bin"
+      flutter doctor
     displayName: 'Install Flutter'
 
   - script: flutter pub get
