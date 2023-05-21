@@ -1,0 +1,35 @@
+trigger:
+  branches:
+    include:
+      - main  # Or specify your desired branch
+
+pool:
+  vmImage: 'macos-latest'  # Or choose the appropriate agent for your platform (e.g., ubuntu-latest for Linux)
+
+steps:
+  - script: echo '##[command]sudo gem install cocoapods'  # Install CocoaPods for iOS
+    displayName: 'Install CocoaPods'
+
+  - script: flutter pub get
+    displayName: 'Get Flutter dependencies'
+
+  - script: flutter --version  # Display Flutter version
+    displayName: 'Show Flutter version'
+
+  - script: flutter build ios --release --no-codesign
+    displayName: 'Build iOS app'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.SourcesDirectory)/build/ios/iphoneos/Runner.app'
+      ArtifactName: 'iOS App'
+      publishLocation: 'container'
+
+  - script: flutter build apk --debug
+    displayName: 'Build Android app'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      PathtoPublish: '$(Build.SourcesDirectory)/build/app/outputs/apk/release/app.apk'
+      ArtifactName: 'Android App'
+      publishLocation: 'container'
