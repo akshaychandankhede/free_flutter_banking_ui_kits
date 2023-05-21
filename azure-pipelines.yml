@@ -4,17 +4,14 @@ trigger:
       - main  # Or specify your desired branch
 
 pool:
-  vmImage: 'macos-latest'  # Or choose the appropriate agent for your platform (e.g., ubuntu-latest for Linux)
+  vmImage: 'ubuntu-latest'  # Or choose the appropriate agent for your platform (e.g., ubuntu-latest for Linux)
 
 steps:
-  - script: echo '##[command]sudo gem install cocoapods'  # Install CocoaPods for iOS
-    displayName: 'Install CocoaPods'
+  
 
   - script: |
-      mkdir deployment
-      cd deployment
-      wget https://storage.googleapis.com/flutter_infra_release/releases/stable/macos/flutter_macos_arm64_3.10.1-stable.zip
-      unzip flutter_macos_3.10.1-stable.zip
+      wget https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.10.1-stable.tar.xz
+      tar xvf flutter_linux_3.10.1-stable.tar.xz
       export PATH="$PATH:`pwd`/flutter/bin"
       flutter doctor
     displayName: 'Install Flutter'
