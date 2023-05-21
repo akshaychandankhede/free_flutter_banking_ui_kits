@@ -11,13 +11,7 @@ steps:
     displayName: 'Install CocoaPods'
 
   - script: |
-      sudo apt-get update
-      sudo apt-get install -y lib32stdc++6
-      sudo wget https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_2.5.2-stable.tar.xz
-      sudo tar xf flutter_linux_2.5.2-stable.tar.xz
-      sudo chown -R $USER:$GROUP flutter
-      echo 'export PATH="$PATH:/home/runner/flutter/bin"' >> ~/.bashrc
-      flutter precache
+      curl -sSL https://get.flutter.dev | bash
     displayName: 'Install Flutter'
 
   - script: flutter pub get
