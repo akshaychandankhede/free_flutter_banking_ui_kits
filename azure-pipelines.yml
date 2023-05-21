@@ -4,15 +4,11 @@ trigger:
       - main  # Or specify your desired branch
 
 pool:
-  vmImage: 'macos-latest'  # Or choose the appropriate agent for your platform (e.g., ubuntu-latest for Linux)
+  vmImage: 'macos-11'
 
 steps:
   - script: echo '##[command]sudo gem install cocoapods'  # Install CocoaPods for iOS
     displayName: 'Install CocoaPods'
-
-  - script: |
-      curl -sSL https://get.flutter.dev | bash
-    displayName: 'Install Flutter'
 
   - script: flutter pub get
     displayName: 'Get Flutter dependencies'
