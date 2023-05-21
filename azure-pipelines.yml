@@ -10,6 +10,16 @@ steps:
   - script: echo '##[command]sudo gem install cocoapods'  # Install CocoaPods for iOS
     displayName: 'Install CocoaPods'
 
+  - script: |
+      sudo apt-get update
+      sudo apt-get install -y lib32stdc++6
+      sudo wget https://storage.googleapis.com/flutter_infra/releases/stable/linux/flutter_linux_2.5.2-stable.tar.xz
+      sudo tar xf flutter_linux_2.5.2-stable.tar.xz
+      sudo chown -R $USER:$GROUP flutter
+      echo 'export PATH="$PATH:/home/runner/flutter/bin"' >> ~/.bashrc
+      flutter precache
+    displayName: 'Install Flutter'
+
   - script: flutter pub get
     displayName: 'Get Flutter dependencies'
 
@@ -25,11 +35,11 @@ steps:
       ArtifactName: 'iOS App'
       publishLocation: 'container'
 
-  - script: flutter build apk --debug
+  - script: flutter build apk --release
     displayName: 'Build Android app'
 
   - task: PublishBuildArtifacts@1
     inputs:
-      PathtoPublish: '$(Build.SourcesDirectory)/build/app/outputs/apk/release/app.apk'
+      PathtoPublish: '$(Build.SourcesDirectory)/build/app/outputs/apk/release/app-release.apk'
       ArtifactName: 'Android App'
       publishLocation: 'container'
